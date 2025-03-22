@@ -1,0 +1,8 @@
+{
+  "solarFlareRisk": "low | medium | high",
+  "radiationLevels": {
+    "LEO": "45μSv/h",
+    "Lunar": "380μSv/d",
+    "Mars": "250μSv/d"
+  }
+}
