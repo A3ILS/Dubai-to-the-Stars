@@ -1,0 +1,27 @@
+# .github/workflows/deploy.yml
+name: Space Deployment
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  cosmic-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install Zero-G Dependencies
+        run: |
+          npm ci
+          npm run build
+          
+      - name: Launch to Orbit (AWS Space Gateway)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.ASTRA_KEY }}
+          aws-secret-access-key: ${{ secrets.ASTRA_SECRET }}
+          aws-region: moon-west-1
