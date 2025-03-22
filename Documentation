@@ -1,0 +1,17 @@
+# Space Travel API Docs
+
+## Endpoints
+`POST /api/bookings`
+- Payload:
+  ```json
+  {
+    "destination": "Mars | Lunar | ISS",
+    "package": "basic | premium | enterprise",
+    "departure": "ISO8601 Date",
+    "passengers": [
+      {
+        "name": "Mohammed Al Habtoor",
+        "spacePassport": "ARE-2025-XP"
+      }
+    ]
+  }
