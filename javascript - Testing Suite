@@ -1,0 +1,18 @@
+// __tests__/booking.test.js
+describe('Space Booking System', () => {
+  test('Mars mission pricing calculation', () => {
+    const engine = new PricingEngine();
+    const quote = engine.calculateTrip('premium', 'Mars', 14);
+    
+    expect(quote.total).toBeGreaterThan(250000);
+    expect(quote.taxPercentage).toEqual(0.25);
+  });
+
+  test('Launch window validation', () => {
+    const validDate = Temporal.PlainDate.from('2025-04-15');
+    const invalidDate = Temporal.PlainDate.from('2025-01-10');
+    
+    expect(isLaunchWindow(validDate)).toBeTruthy();
+    expect(isLaunchWindow(invalidDate)).toBeFalsy();
+  });
+});
