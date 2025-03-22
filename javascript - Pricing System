@@ -1,0 +1,20 @@
+const SPACE_TAX_RATES = {
+  LEO: 0.12,
+  Lunar: 0.18,
+  Mars: 0.25,
+};
+
+export class PricingEngine {
+  calculateTrip(packageType, destination, duration) {
+    const basePrices = await SpacePricingDB.getBasePrices();
+    const tax = SPACE_TAX_RATES[destination];
+    
+    return {
+      base: basePrices[packageType][destination],
+      durationMultiplier: Math.sqrt(duration),
+      insurance: 1500,
+      taxPercentage: tax,
+      total: (base * Math.sqrt(duration) + 1500) * (1 + tax)
+    };
+  }
+}
