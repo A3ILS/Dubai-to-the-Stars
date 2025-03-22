@@ -1,0 +1,30 @@
+// backend/middleware/security.js
+import { rateLimit } from 'express-rate-limit';
+
+export const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Space-grade encryption for bookings
+import { WebCrypto } from 'node-webcrypto-ossl';
+
+export async function encryptBookingData(payload) {
+  const crypto = new WebCrypto();
+  const key = await crypto.subtle.generateKey(
+    { name: 'AES-GCM', length: 256 },
+    true,
+    ['encrypt', 'decrypt']
+  );
+  
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encrypted = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    key,
+    new TextEncoder().encode(JSON.stringify(payload))
+  );
+  
+  return { iv, encryptedData: Buffer.from(encrypted) };
+}
